@@ -1,0 +1,28 @@
+# Model checkpoints (too large for GitHub)
+*.tar
+*.pt
+checkpoints/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
+.env/
+
+# IDE
+.vscode/
+.idea/
+
+# Data (large files)
+*.scp
+*.wav
+*.flac

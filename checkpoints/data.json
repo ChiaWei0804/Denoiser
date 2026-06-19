@@ -1,0 +1,19 @@
+{
+    "train": {
+        "mix_scp": "d:/denoiser-main/final_dataset/final_dataset/tr/mix.scp",
+        "ref_scp": [
+            "d:/denoiser-main/final_dataset/final_dataset/tr/spk1.scp",
+            "d:/denoiser-main/final_dataset/final_dataset/tr/spk2.scp"
+        ],
+        "sample_rate": 16000
+    },
+    "dev": {
+        "mix_scp": "d:/denoiser-main/final_dataset/final_dataset/cv/mix.scp",
+        "ref_scp": [
+            "d:/denoiser-main/final_dataset/final_dataset/cv/spk1.scp",
+            "d:/denoiser-main/final_dataset/final_dataset/cv/spk2.scp"
+        ],
+        "sample_rate": 16000
+    },
+    "chunk_size": 48000
+}
