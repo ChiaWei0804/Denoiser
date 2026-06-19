@@ -1,0 +1,13 @@
+{
+    "optimizer": "adam",
+    "optimizer_kwargs": {
+        "lr": 0.001,
+        "weight_decay": 1e-05
+    },
+    "min_lr": 1e-08,
+    "patience": 2,
+    "factor": 0.5,
+    "logging_period": 200,
+    "no_impr": 100,
+    "loss_mode": "sisnr"
+}
