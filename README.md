@@ -241,9 +241,11 @@ Training ran for **50 epochs** (2026-05-26 → 2026-06-03):
 
 Loss curves:
 
-- [`loss_vs_epoch.png`](loss_vs_epoch.png)
-- [`loss_vs_epoch_comparison.png`](loss_vs_epoch_comparison.png)
-- [`loss_vs_epoch_e50.png`](loss_vs_epoch_e50.png)
+![Loss vs Epoch](loss_vs_epoch.png)
+
+![Loss vs Epoch Comparison](loss_vs_epoch_comparison.png)
+
+![Loss vs Epoch E50](loss_vs_epoch_e50.png)
 
 ---
 
