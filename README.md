@@ -85,7 +85,18 @@ PReLU → gLN
 
 ### Direction A+C Adaptive Controller
 
-Implemented **inside the `forward()` loop**, computed after each slice's skip connections accumulate:
+**`__init__` — Layer Declarations:**
+
+```python
+# A: Input Scaling — FC(Sc→4), extra params: 256×4+4 = 1,028
+self.fc_scale = nn.Linear(Sc, 4)
+
+# C: Phase Shift — FC(N//2→4), extra params: 256×4+4 = 1,028
+self.fc_shift = nn.Linear(N // 2, 4)   # N//2 = 256
+self.tau = 1.0  # Gumbel-Softmax temperature (annealed during training)
+```
+
+**`forward()` — Computed inline after each slice's TCN blocks:**
 
 ```python
 # After Slice s finishes all R×X blocks:
@@ -109,6 +120,15 @@ w_eff          = (delta * scaled_shifted).sum(dim=-1)  # (B,)
 
 weighted_skip  = skip_connection * w_eff.unsqueeze(-1).unsqueeze(-1)
 Slices_Output  = Slices_Output + weighted_skip
+```
+
+**`trainer.py` — τ Annealing (per epoch):**
+
+```python
+# In Trainer.run(), at the start of each epoch:
+if hasattr(self.nnet, 'tau'):
+    self.nnet.tau = max(0.1, 1.0 - (self.cur_epoch / num_epochs) * 0.9)
+    self.logger.info("Gumbel-Softmax tau = {:.3f}".format(self.nnet.tau))
 ```
 
 > **Key implementation detail**: Both `fc_scale` and `fc_shift` receive the **same** `c_skip` (mean-pooled from `skip_connection` of the current slice), **not** from the encoder output `w`.  
