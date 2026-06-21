@@ -91,8 +91,8 @@ PReLU → gLN
 # A: Input Scaling — FC(Sc→4), extra params: 256×4+4 = 1,028
 self.fc_scale = nn.Linear(Sc, 4)
 
-# C: Phase Shift — FC(N//2→4), extra params: 256×4+4 = 1,028
-self.fc_shift = nn.Linear(N // 2, 4)   # N//2 = 256
+# C: Phase Shift — Linear(256, 4), extra params: 256×4+4 = 1,028
+self.fc_shift = nn.Linear(256, 4)
 self.tau = 1.0  # Gumbel-Softmax temperature (annealed during training)
 ```
 
@@ -131,8 +131,7 @@ if hasattr(self.nnet, 'tau'):
     self.logger.info("Gumbel-Softmax tau = {:.3f}".format(self.nnet.tau))
 ```
 
-> **Key implementation detail**: Both `fc_scale` and `fc_shift` receive the **same** `c_skip` (mean-pooled from `skip_connection` of the current slice), **not** from the encoder output `w`.  
-> `fc_shift` input dim is `N//2 = 256` (same as `Sc=256`), matching `c_skip` exactly.
+> **Key implementation detail**: Both `fc_scale` and `fc_shift` are `Linear(256, 4)` and receive the **same** `c_skip` (mean-pooled from `skip_connection` of the current slice), **not** from the encoder output `w`.
 
 ---
 
