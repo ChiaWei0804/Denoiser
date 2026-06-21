@@ -156,7 +156,6 @@ denoiser/
 │   ├── trainer.json         # Trainer config snapshot
 │   ├── mdl.json             # Model config snapshot
 │   └── data.json            # Data config snapshot
-├── loss_vs_epoch.png
 ├── loss_vs_epoch_comparison.png
 ├── loss_vs_epoch_e50.png
 └── md/                      # Design documents and implementation plans
@@ -260,8 +259,6 @@ Training ran for **50 epochs** (2026-05-26 → 2026-06-03):
 > A final loss of −14.85 means SI-SNR ≈ **14.85 dB**.
 
 Loss curves:
-
-![Loss vs Epoch](loss_vs_epoch.png)
 
 ![Loss vs Epoch Comparison](loss_vs_epoch_comparison.png)
 
