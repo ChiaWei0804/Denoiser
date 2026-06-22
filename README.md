@@ -271,8 +271,9 @@ Evaluated on the **held-out test set** (`tt/`) using `test.py` with PIT SI-SNR:
 
 | Model | Test SI-SNR (dB) |
 |-------|-----------------|
-| **+ Direction A+C (Ours)** | **TBD** |
+| **+ Direction A+C (Ours)** | **14.29 ± 2.79** |
 
+> Evaluated on 1,443 utterances from the held-out test set (`tt/`).  
 > Run `python test.py --checkpoint checkpoints/best.pt.tar` to reproduce.
 
 ---
