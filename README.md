@@ -244,6 +244,23 @@ nnet.load_state_dict(old_model['model_state_dict'], strict=False)
 
 ## Training Results
 
+### Training Phases
+
+Training was conducted in **two phases**:
+
+| Phase | Epochs | Description |
+|-------|--------|-------------|
+| Phase 1 | 1 → 20 | Initial fine-tune from `best.pt.tar` |
+| Phase 2 | 21 → 50 | Resumed from Phase 1 checkpoint, continuing to epoch 50 |
+
+> **⚠️ Epoch 21 Anomaly**: At the start of Phase 2 (epoch 21), a **sharp spike in dev loss** was observed — the model's performance temporarily degraded significantly before recovering in subsequent epochs.
+>
+> **Suspected cause**: When training was resumed, the Gumbel-Softmax temperature `τ` (tau) was **reset to its initial value of 1.0** instead of continuing from the annealed value at epoch 20 (~0.64). This caused the phase-shift controller (Direction C) to suddenly behave much more randomly (soft distributions instead of near-argmax), disrupting the learned weighting scheme until the model re-adapted.
+
+---
+
+### Summary
+
 Training ran for **50 epochs** (2026-05-26 → 2026-06-03):
 
 | Metric | Value |
@@ -273,7 +290,7 @@ Evaluated on the **held-out test set** (`tt/`) using `test.py` with PIT SI-SNR:
 |-------|-----------------|
 | **+ Direction A+C (Ours)** | **14.29 ± 2.79** |
 
-> Evaluated on 1,443 utterances from the held-out test set (`tt/`).  
+> Evaluated on 1,440 utterances from the held-out test set (`tt/`).  
 > Run `python test.py --checkpoint checkpoints/best.pt.tar` to reproduce.
 
 ---
