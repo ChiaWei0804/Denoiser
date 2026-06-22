@@ -265,6 +265,19 @@ Loss curves:
 
 ---
 
+## Test Results
+
+Evaluated on the **held-out test set** (`tt/`) using `test.py` with PIT SI-SNR:
+
+| Model | Test SI-SNR (dB) |
+|-------|-----------------|
+| **+ Direction A+C (Ours)** | **TBD** |
+
+> Run `python test.py --checkpoint checkpoints/best.pt.tar` to reproduce.
+
+---
+
+
 ## How to Run
 
 ### Requirements
