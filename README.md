@@ -255,7 +255,12 @@ Training was conducted in **two phases**:
 
 > **⚠️ Epoch 21 Anomaly**: At the start of Phase 2 (epoch 21), a **sharp spike in dev loss** was observed — the model's performance temporarily degraded significantly before recovering in subsequent epochs.
 >
-> **Suspected cause**: When training was resumed, the Gumbel-Softmax temperature `τ` (tau) was **reset to its initial value of 1.0** instead of continuing from the annealed value at epoch 20 (~0.64). This caused the phase-shift controller (Direction C) to suddenly behave much more randomly (soft distributions instead of near-argmax), disrupting the learned weighting scheme until the model re-adapted.
+> **Root cause confirmed**: The tau annealing formula is `τ = max(0.1, 1.0 − (cur_epoch / num_epochs) × 0.9)`.  
+> - Phase 1 ended at epoch 20 with `num_epochs=20` → `τ = max(0.1, 1.0 − 1.0×0.9) = **0.10**` (near hard-argmax)  
+> - Phase 2 resumed with `num_epochs=50` → epoch 21 gives `τ = 1.0 − (21/50)×0.9 = **0.622**`  
+>
+> Changing `num_epochs` from 20 to 50 caused τ to **jump from 0.10 back to 0.622**, forcing Direction C (phase-shift controller) to revert from near-deterministic selection to highly random soft distributions. This disrupted the learned weighting scheme and caused the observed loss spike until the model re-adapted over subsequent epochs.
+
 
 ---
 
